@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psikolog Kliniği Yönetim Sistemi</title>
+    <link rel="stylesheet" href="../css/yonetici_ekrani.css">
+</head>
+<body>
+    <!-- Hamburger Menü (Mobil) -->
+    <div class="hamburger-menu" id="hamburgerMenu" onclick="toggleMobileSidebar()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <!-- Toggle Butonu -->
+        <div class="sidebar-toggle" onclick="toggleSidebar()">
+            <span id="toggleIcon">◀</span>
+        </div>
+
+        <!-- Logo Bölümü -->
+        <div class="logo-container">
+            <div class="logo">🧠</div>
+            <div class="clinic-name">Psikoloji Sistemi</div>
+        </div>
+
+        <!-- Menü Konteyneri -->
+        <div class="menu-container">
+            <!-- Ana Menü -->
+            <div class="menu-section-title">ANA MENÜ</div>
+            <ul>
+                <li>
+                    <a href="#" class="active" onclick="loadPage('dashboard')">
+                        <span class="icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="loadPage('randevular')">
+                        <span class="icon">📅</span>
+                        <span>Randevular</span>
+                        <span class="badge">5</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Danışan Yönetimi -->
+            <div class="menu-section-title">DANIŞAN YÖNETİMİ</div>
+            <ul>
+                <li>
+                    <a href="#" onclick="loadPage('danisanlar')">
+                        <span class="icon">👥</span>
+                        <span>Danışan Listesi</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="loadPage('yeni-danisan')">
+                        <span class="icon">➕</span>
+                        <span>Yeni Danışan</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="loadPage('seans-gecmisi')">
+                        <span class="icon">📋</span>
+                        <span>Seans Geçmişi</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Finans -->
+            <div class="menu-section-title">FİNANS</div>
+            <ul>
+                <li>
+                    <a href="#" onclick="loadPage('odemeler')">
+                        <span class="icon">💳</span>
+                        <span>Ödemeler</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="loadPage('gelir-raporlari')">
+                        <span class="icon">💰</span>
+                        <span>Gelir Raporları</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Raporlar -->
+            <div class="menu-section-title">RAPORLAR</div>
+            <ul>
+                <li>
+                    <a href="#" onclick="loadPage('istatistikler')">
+                        <span class="icon">📈</span>
+                        <span>İstatistikler</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="loadPage('analizler')">
+                        <span class="icon">🔍</span>
+                        <span>Analizler</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+        <!-- Sidebar Footer -->
+        <div class="sidebar-footer">
+            <!-- Kullanıcı Bilgisi -->
+            <div class="user-info">
+                <div class="user-avatar">AY</div>
+                <div class="user-details">
+                    <div class="user-name">Ahmet Yılmaz</div>
+                    <div class="user-role">Yönetici</div>
+                </div>
+            </div>
+            
+            <!-- Çıkış Butonu -->
+            <button class="logout-btn" onclick="logout()">
+                <span class="icon">🚪</span>
+                <span>Çıkış Yap</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Mobil Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileSidebar()"></div>
+
+    <!-- Ana İçerik -->
+    <main id="mainContent">
+        <h1>Dashboard</h1>
+        <div class="breadcrumb">Ana Sayfa / Dashboard</div>
+
+        <!-- Dashboard Kartları -->
+        <div class="dashboard-cards">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Bugünkü Randevular</span>
+                    <span class="card-icon">📅</span>
+                </div>
+                <div class="card-value">12</div>
+                <div class="card-footer">↑ 3 yeni randevu</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Aktif Danışanlar</span>
+                    <span class="card-icon">👥</span>
+                </div>
+                <div class="card-value">48</div>
+                <div class="card-footer">↑ 5 yeni danışan</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Bu Ayki Gelir</span>
+                    <span class="card-icon">💰</span>
+                </div>
+                <div class="card-value">₺45,200</div>
+                <div class="card-footer">↑ %12 artış</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Bekleyen Ödemeler</span>
+                    <span class="card-icon">⏳</span>
+                </div>
+                <div class="card-value">₺8,500</div>
+                <div class="card-footer class="negative">↓ 3 ödeme bekleniyor</div>
+            </div>
+        </div>
+
+        <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 20px;">
+            <h2 style="color: #333; margin-bottom: 20px;">Hoş Geldiniz!</h2>
+            <p style="color: #666; line-height: 1.6;">
+                Bu sistem, psikoloji kliniğinizin tüm süreçlerini kolayca yönetmenizi sağlar. 
+                Sol menüden ilgili bölümlere erişebilir, danışanlarınızı takip edebilir, 
+                randevularınızı düzenleyebilir ve finansal raporlarınızı görüntüleyebilirsiniz.
+            </p>
+        </div>
+    </main>
+
+    <script src="../js/yonetici_ekrani.js"></script>
+</body>
+</html>
