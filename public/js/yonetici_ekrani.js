@@ -1,38 +1,3 @@
-// Sidebar Toggle Fonksiyonu
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const toggleIcon = document.getElementById('toggleIcon');
-            
-            sidebar.classList.toggle('collapsed');
-            
-            if (sidebar.classList.contains('collapsed')) {
-                toggleIcon.textContent = '▶';
-            } else {
-                toggleIcon.textContent = '◀';
-            }
-        }
-
-        // Mobil Sidebar Toggle
-        function toggleMobileSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('mobileOverlay');
-            const hamburger = document.getElementById('hamburgerMenu');
-            
-            sidebar.classList.toggle('mobile-open');
-            overlay.classList.toggle('active');
-            hamburger.classList.toggle('active');
-        }
-
-        // Mobil Sidebar Kapatma
-        function closeMobileSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('mobileOverlay');
-            const hamburger = document.getElementById('hamburgerMenu');
-            
-            sidebar.classList.remove('mobile-open');
-            overlay.classList.remove('active');
-            hamburger.classList.remove('active');
-        }
 
         // Sayfa Yükleme (Demo)
         function loadPage(pageName) {

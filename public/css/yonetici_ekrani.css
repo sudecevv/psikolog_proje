@@ -22,24 +22,6 @@ body {
     z-index: 1000;
 }
 
-/* Scrollbar Özelleştirme */
-.sidebar::-webkit-scrollbar {
-    width: 6px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 3px;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
-}
-
 /* Logo Bölümü */
 .sidebar .logo-container {
     padding: 25px 20px;
@@ -68,7 +50,7 @@ body {
 
 .sidebar .clinic-name {
     color: white;
-    font-size: 14px;
+    font-size: 20px;
     margin-top: 10px;
     font-weight: 500;
     opacity: 0.9;
