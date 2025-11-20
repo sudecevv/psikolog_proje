@@ -1,462 +1,596 @@
- // Sidebar Toggle Fonksiyonu
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const toggleIcon = document.getElementById('toggleIcon');
-            
-            sidebar.classList.toggle('collapsed');
-            
-            if (sidebar.classList.contains('collapsed')) {
-                toggleIcon.textContent = '▶';
-            } else {
-                toggleIcon.textContent = '◀';
-            }
-        }
+// Sayfa içerikleri
+        const pages = {
+            dashboard: `
+                <div class="page-header">
+                    <h1>Hoş Geldiniz, Ahmet Yılmaz</h1>
+                    <div class="breadcrumb">Ana Sayfa</div>
+                </div>
 
-        // Mobil Sidebar Toggle
-        function toggleMobileSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('mobileOverlay');
-            const hamburger = document.getElementById('hamburgerMenu');
-            
-            sidebar.classList.toggle('mobile-open');
-            overlay.classList.toggle('active');
-            hamburger.classList.toggle('active');
-        }
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Toplam Seans</div>
+                                <div class="card-value">24</div>
+                            </div>
+                            <div class="card-icon">📊</div>
+                        </div>
+                        <div class="card-footer">Son seans: 15 Kas 2024</div>
+                    </div>
 
-        // Mobil Sidebar Kapatma
-        function closeMobileSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('mobileOverlay');
-            const hamburger = document.getElementById('hamburgerMenu');
-            
-            sidebar.classList.remove('mobile-open');
-            overlay.classList.remove('active');
-            hamburger.classList.remove('active');
-        }
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Yaklaşan Randevu</div>
+                                <div class="card-value" style="font-size: 20px;">22 Kas 2024</div>
+                            </div>
+                            <div class="card-icon">📅</div>
+                        </div>
+                        <div class="card-footer">Saat: 14:00</div>
+                    </div>
 
-        // Sayfa Yükleme
-        function loadPage(pageName) {
-            const menuLinks = document.querySelectorAll('.sidebar ul li a');
-            menuLinks.forEach(link => link.classList.remove('active'));
-            event.target.closest('a').classList.add('active');
-            
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Ödeme Durumu</div>
+                                <div class="card-value">₺1,200</div>
+                            </div>
+                            <div class="card-icon">💰</div>
+                        </div>
+                        <div class="card-footer" style="color: #dc3545;">Bekleyen ödeme</div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Terapi Süresi</div>
+                                <div class="card-value">6</div>
+                            </div>
+                            <div class="card-icon">⏱</div>
+                        </div>
+                        <div class="card-footer">Ay</div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Yaklaşan Randevularım</h2>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tarih</th>
+                                <th>Saat</th>
+                                <th>Seans Türü</th>
+                                <th>Psikolog</th>
+                                <th>Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>22 Kasım 2024</td>
+                                <td>14:00</td>
+                                <td>Bireysel Terapi</td>
+                                <td>Dr. Ayşe Demir</td>
+                                <td><span class="status-badge status-upcoming">Onaylandı</span></td>
+                            </tr>
+                            <tr>
+                                <td>29 Kasım 2024</td>
+                                <td>15:30</td>
+                                <td>Bireysel Terapi</td>
+                                <td>Dr. Ayşe Demir</td>
+                                <td><span class="status-badge status-upcoming">Onaylandı</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `,
+
+            randevu: `
+                <div class="page-header">
+                    <h1>Randevu Al</h1>
+                    <div class="breadcrumb">Ana Sayfa / Randevu Al</div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Seans Türü Seçin</h2>
+                    </div>
+                    <div class="seans-type-grid">
+                        <div class="seans-type-card" onclick="selectSeansType(this, 'bireysel')">
+                            <div class="icon">👤</div>
+                            <div class="name">Bireysel Terapi</div>
+                            <div class="duration">50 dakika</div>
+                            <div class="price">₺800</div>
+                        </div>
+                        <div class="seans-type-card" onclick="selectSeansType(this, 'cift')">
+                            <div class="icon">👫</div>
+                            <div class="name">Çift Terapisi</div>
+                            <div class="duration">60 dakika</div>
+                            <div class="price">₺1,200</div>
+                        </div>
+                        <div class="seans-type-card" onclick="selectSeansType(this, 'aile')">
+                            <div class="icon">👨‍👩‍👧‍👦</div>
+                            <div class="name">Aile Terapisi</div>
+                            <div class="duration">60 dakika</div>
+                            <div class="price">₺1,500</div>
+                        </div>
+                        <div class="seans-type-card" onclick="selectSeansType(this, 'online')">
+                            <div class="icon">💻</div>
+                            <div class="name">Online Seans</div>
+                            <div class="duration">45 dakika</div>
+                            <div class="price">₺600</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section" style="margin-top: 20px;">
+                    <div class="section-header">
+                        <h2>Randevu Detayları</h2>
+                    </div>
+                    <form class="appointment-form" onsubmit="createAppointment(event)">
+                        <div class="form-group">
+                            <label for="psikolog">Psikolog Seçin</label>
+                            <select id="psikolog" required>
+                                <option value="">Seçiniz</option>
+                                <option value="1">Dr. Ayşe Demir</option>
+                                <option value="2">Dr. Mehmet Kaya</option>
+                                <option value="3">Dr. Zeynep Yılmaz</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tarih">Randevu Tarihi</label>
+                            <input type="date" id="tarih" required min="${new Date().toISOString().split('T')[0]}">
+                        </div>
+                        <div class="form-group">
+                            <label for="saat">Randevu Saati</label>
+                            <select id="saat" required>
+                                <option value="">Seçiniz</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label for="notlar">Notlar (Opsiyonel)</label>
+                            <textarea id="notlar" rows="3" placeholder="Belirtmek istediğiniz özel bir durum varsa yazabilirsiniz..."></textarea>
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                                📅 Randevu Oluştur
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `,
+
+            seanslar: `
+                <div class="page-header">
+                    <h1>Geçmiş Seanslarım</h1>
+                    <div class="breadcrumb">Ana Sayfa / Geçmiş Seanslar</div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Tüm Seanslar (24 seans)</h2>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tarih</th>
+                                <th>Saat</th>
+                                <th>Seans Türü</th>
+                                <th>Psikolog</th>
+                                <th>Süre</th>
+                                <th>Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>24</td>
+                                <td>15 Kasım 2024</td>
+                                <td>14:00</td>
+                                <td>Bireysel Terapi</td>
+                                <td>Dr. Ayşe Demir</td>
+                                <td>50 dk</td>
+                                <td><span class="status-badge status-completed">Tamamlandı</span></td>
+                            </tr>
+                            <tr>
+                                <td>23</td>
+                                <td>8 Kasım 2024</td>
+                                <td>15:30</td>
+                                <td>Bireysel Terapi</td>
+                                <td>Dr. Ayşe Demir</td>
+                                <td>50 dk</td>
+                                <td><span class="status-badge status-completed">Tamamlandı</span></td>
+                            </tr>
+                            <tr>
+                                <td>22</td>
+                                <td>1 Kasım 2024</td>
+                                <td>14:00</td>
+                                <td>Online Seans</td>
+                                <td>Dr. Ayşe Demir</td>
+                                <td>45 dk</td>
+                                <td><span class="status-badge status-completed">Tamamlandı</span></td>
+                            </tr>
+                            <tr>
+                                <td>21</td>
+                                <td>25 Ekim 2024</td>
+                                <td>14:00</td>
+                                <td>Bireysel Terapi</td>
+                                <td>Dr. Ayşe Demir</td>
+                                <td>50 dk</td>
+                                <td><span class="status-badge status-completed">Tamamlandı</span></td>
+                            </tr>
+                            <tr>
+                                <td>20</td>
+                                <td>18 Ekim 2024</td>
+                                <td>15:30</td>
+                                <td>Bireysel Terapi</td>
+                                <td>Dr. Ayşe Demir</td>
+                                <td>50 dk</td>
+                                <td><span class="status-badge status-completed">Tamamlandı</span></td>
+                            </tr>
+                            <tr>
+                                <td>19</td>
+                                <td>11 Ekim 2024</td>
+                                <td>14:00</td>
+                                <td>Çift Terapisi</td>
+                                <td>Dr. Ayşe Demir</td>
+                                <td>60 dk</td>
+                                <td><span class="status-badge status-completed">Tamamlandı</span></td>
+                            </tr>
+                            <tr>
+                                <td>18</td>
+                                <td>4 Ekim 2024</td>
+                                <td>14:00</td>
+                                <td>Bireysel Terapi</td>
+                                <td>Dr. Ayşe Demir</td>
+                                <td>50 dk</td>
+                                <td><span class="status-badge status-cancelled">İptal Edildi</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `,
+
+            odemeler: `
+                <div class="page-header">
+                    <h1>Ödeme Bilgilerim</h1>
+                    <div class="breadcrumb">Ana Sayfa / Ödemeler</div>
+                </div>
+
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Toplam Ödenen</div>
+                                <div class="card-value">₺18,400</div>
+                            </div>
+                            <div class="card-icon">✅</div>
+                        </div>
+                        <div class="card-footer">24 seans için</div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Bekleyen Ödeme</div>
+                                <div class="card-value" style="color: #dc3545;">₺1,200</div>
+                            </div>
+                            <div class="card-icon">⏳</div>
+                        </div>
+                        <div class="card-footer" style="color: #dc3545;">1 seans için</div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Bu Ayki Ödeme</div>
+                                <div class="card-value">₺3,200</div>
+                            </div>
+                            <div class="card-icon">📅</div>
+                        </div>
+                        <div class="card-footer">4 seans</div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Ortalama Seans</div>
+                                <div class="card-value">₺767</div>
+                            </div>
+                            <div class="card-icon">💰</div>
+                        </div>
+                        <div class="card-footer">Aylık</div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Ödeme Geçmişi</h2>
+                        <button class="btn btn-primary" onclick="makePayment()">💳 Ödeme Yap</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tarih</th>
+                                <th>Seans</th>
+                                <th>Tutar</th>
+                                <th>Ödeme Yöntemi</th>
+                                <th>Durum</th>
+                                <th>Makbuz</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>15 Kasım 2024</td>
+                                <td>Bireysel Terapi</td>
+                                <td>₺800</td>
+                                <td>Kredi Kartı</td>
+                                <td><span class="status-badge status-pending">Bekliyor</span></td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>8 Kasım 2024</td>
+                                <td>Bireysel Terapi</td>
+                                <td>₺800</td>
+                                <td>Nakit</td>
+                                <td><span class="status-badge status-paid">Ödendi</span></td>
+                                <td><button class="btn btn-secondary" style="padding: 5px 10px; font-size: 12px;" onclick="downloadReceipt()">📄 İndir</button></td>
+                            </tr>
+                            <tr>
+                                <td>1 Kasım 2024</td>
+                                <td>Online Seans</td>
+                                <td>₺600</td>
+                                <td>Havale</td>
+                                <td><span class="status-badge status-paid">Ödendi</span></td>
+                                <td><button class="btn btn-secondary" style="padding: 5px 10px; font-size: 12px;" onclick="downloadReceipt()">📄 İndir</button></td>
+                            </tr>
+                            <tr>
+                                <td>25 Ekim 2024</td>
+                                <td>Bireysel Terapi</td>
+                                <td>₺800</td>
+                                <td>Kredi Kartı</td>
+                                <td><span class="status-badge status-paid">Ödendi</span></td>
+                                <td><button class="btn btn-secondary" style="padding: 5px 10px; font-size: 12px;" onclick="downloadReceipt()">📄 İndir</button></td>
+                            </tr>
+                            <tr>
+                                <td>18 Ekim 2024</td>
+                                <td>Bireysel Terapi</td>
+                                <td>₺800</td>
+                                <td>Nakit</td>
+                                <td><span class="status-badge status-paid">Ödendi</span></td>
+                                <td><button class="btn btn-secondary" style="padding: 5px 10px; font-size: 12px;" onclick="downloadReceipt()">📄 İndir</button></td>
+                            </tr>
+                            <tr>
+                                <td>11 Ekim 2024</td>
+                                <td>Çift Terapisi</td>
+                                <td>₺1,200</td>
+                                <td>Kredi Kartı</td>
+                                <td><span class="status-badge status-paid">Ödendi</span></td>
+                                <td><button class="btn btn-secondary" style="padding: 5px 10px; font-size: 12px;" onclick="downloadReceipt()">📄 İndir</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `,
+
+            profil: `
+                <div class="page-header">
+                    <h1>Profilim</h1>
+                    <div class="breadcrumb">Ana Sayfa / Profilim</div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Kişisel Bilgiler</h2>
+                        <button class="btn btn-primary" onclick="editProfile()">✏ Düzenle</button>
+                    </div>
+                    <div class="appointment-form">
+                        <div class="form-group">
+                            <label>Ad Soyad</label>
+                            <input type="text" value="Ahmet Yılmaz" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>TC Kimlik No</label>
+                            <input type="text" value="12345678901" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Telefon</label>
+                            <input type="tel" value="0532 123 4567" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" value="ahmet@email.com" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Doğum Tarihi</label>
+                            <input type="date" value="1990-05-15" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Cinsiyet</label>
+                            <input type="text" value="Erkek" readonly>
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label>Adres</label>
+                            <textarea readonly rows="3">Ataşehir, İstanbul</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section" style="margin-top: 20px;">
+                    <div class="section-header">
+                        <h2>Acil Durum İletişim</h2>
+                    </div>
+                    <div class="appointment-form">
+                        <div class="form-group">
+                            <label>Acil Kişi Adı</label>
+                            <input type="text" value="Ayşe Yılmaz" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Yakınlık Derecesi</label>
+                            <input type="text" value="Eş" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Telefon</label>
+                            <input type="tel" value="0533 234 5678" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section" style="margin-top: 20px;">
+                    <div class="section-header">
+                        <h2>Terapi Bilgileri</h2>
+                    </div>
+                    <div class="appointment-form">
+                        <div class="form-group">
+                            <label>Terapist</label>
+                            <input type="text" value="Dr. Ayşe Demir" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Terapi Başlangıç Tarihi</label>
+                            <input type="date" value="2024-05-20" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Toplam Seans</label>
+                            <input type="text" value="24" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Terapi Türü</label>
+                            <input type="text" value="Bireysel Terapi" readonly>
+                        </div>
+                    </div>
+                </div>
+            `
+        };
+
+        let selectedSeansType = null;
+
+        // Sayfa gösterme
+        function showPage(pageName) {
             const mainContent = document.getElementById('mainContent');
+            mainContent.innerHTML = pages[pageName] || pages['dashboard'];
             
+            // Aktif menü güncelleme
+            document.querySelectorAll('.sidebar ul li a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.closest('a').classList.add('active');
+
             // Mobil menüyü kapat
             if (window.innerWidth <= 768) {
                 closeMobileSidebar();
             }
-            
-            // Sayfa içeriğini değiştir
-            const pageContents = {
-                'dashboard': `
-                    <h1>Dashboard</h1>
-                    <div class="breadcrumb">Ana Sayfa / Dashboard</div>
-                    <div class="dashboard-cards">
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="card-title">Bekleyen Randevular</span>
-                                <span class="card-icon">📅</span>
-                            </div>
-                            <div class="card-value">2</div>
-                            <div class="card-footer">Bir sonraki: 15 Kasım 2025</div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="card-title">Toplam Seans</span>
-                                <span class="card-icon">📋</span>
-                            </div>
-                            <div class="card-value">24</div>
-                            <div class="card-footer">Son seans: 8 Kasım 2025</div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="card-title">Bekleyen Ödeme</span>
-                                <span class="card-icon">💰</span>
-                            </div>
-                            <div class="card-value">₺800</div>
-                            <div class="card-footer negative">1 ödeme bekliyor</div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="card-title">Son Randevu</span>
-                                <span class="card-icon">🕐</span>
-                            </div>
-                            <div class="card-value">15 Kas</div>
-                            <div class="card-footer">Saat: 14:00</div>
-                        </div>
-                    </div>
-                    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 20px;">
-                        <h2 style="color: #333; margin-bottom: 20px;">Hoş Geldiniz, Elif Hanım!</h2>
-                        <p style="color: #666; line-height: 1.6;">
-                            Hasta panelinize hoş geldiniz. Bu panelden randevularınızı görüntüleyebilir, 
-                            yeni randevu oluşturabilir, geçmiş seanslarınıza göz atabilir ve ödeme işlemlerinizi 
-                            gerçekleştirebilirsiniz. Herhangi bir sorunuz olduğunda bizimle iletişime geçebilirsiniz.
-                        </p>
-                    </div>
-                `,
-                'randevularim': `
-                    <h1>Randevularım</h1>
-                    <div class="breadcrumb">Ana Sayfa / Randevularım</div>
-                    <div class="table-container">
-                        <h3 style="margin-bottom: 20px;">Aktif Randevular</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <td>15 Kasım 2025</td>
-                                    <td>14:00</td>
-                                    <td>Dr. Ayşe Yılmaz</td>
-                                    <td>Bireysel Terapi</td>
-                                    <td><span class="status-badge status-bekliyor">Bekliyor</span></td>
-                                </tr>
-                                <tr>
-                                    <td>22 Kasım 2025</td>
-                                    <td>10:00</td>
-                                    <td>Dr. Ayşe Yılmaz</td>
-                                    <td>Bireysel Terapi</td>
-                                    <td><span class="status-badge status-bekliyor">Bekliyor</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                `,
-                'yeni-randevu': `
-                    <h1>Yeni Randevu Oluştur</h1>
-                    <div class="breadcrumb">Ana Sayfa / Yeni Randevu Oluştur</div>
-                    <div class="form-container">
-                        <h3 style="margin-bottom: 25px;">Randevu Bilgileri</h3>
-                        <form onsubmit="event.preventDefault(); createAppointment();">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>Tarih *</label>
-                                    <input type="date" required min="${new Date().toISOString().split('T')[0]}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Saat *</label>
-                                    <input type="time" required>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Psikolog Seçimi *</label>
-                                <select required>
-                                    <option value="">Psikolog Seçiniz</option>
-                                    <option value="1">Dr. Ayşe Yılmaz</option>
-                                </select>
-                            </div>
+        }
 
-                            <div class="form-group">
-                                <label>Seans Türü *</label>
-                                <select required>
-                                    <option value="">Seans Türü Seçiniz</option>
-                                    <option value="bireysel">Bireysel Terapi (60 dk) - ₺800</option>
-                                    <option value="cift">Çift Terapisi (90 dk) - ₺1200</option>
-                                    <option value="aile">Aile Terapisi (90 dk) - ₺1500</option>
-                                    <option value="grup">Grup Terapisi (120 dk) - ₺600</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Notlar (İsteğe bağlı)</label>
-                                <textarea placeholder="Randevunuzla ilgili eklemek istediğiniz notlar..."></textarea>
-                            </div>
-
-                            <div style="display: flex; gap: 10px; margin-top: 25px;">
-                                <button type="submit" class="btn btn-primary">Randevu Oluştur</button>
-                                <button type="button" class="btn btn-secondary" onclick="loadPage('dashboard')">İptal</button>
-                            </div>
-                        </form>
-                    </div>
-                `,
-                'gecmis-seanslar': `
-                    <h1>Geçmiş Seanslar</h1>
-                    <div class="breadcrumb">Ana Sayfa / Geçmiş Seanslar</div>
-                    <div class="table-container">
-                        <h3 style="margin-bottom: 20px;">Tamamlanan Seanslar</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Tarih</th>
-                                    <th>Psikolog</th>
-                                    <th>Seans Türü</th>
-                                    <th>Süre</th>
-                                    <th>Ödeme</th>
-                                    <th>Durum</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>8 Kasım 2025</td>
-                                    <td>Dr. Ayşe Yılmaz</td>
-                                    <td>Bireysel Terapi</td>
-                                    <td>60 dk</td>
-                                    <td>₺800</td>
-                                    <td><span class="status-badge status-tamamlandi">Tamamlandı</span></td>
-                                </tr>
-                                <tr>
-                                    <td>1 Kasım 2025</td>
-                                    <td>Dr. Ayşe Yılmaz</td>
-                                    <td>Bireysel Terapi</td>
-                                    <td>60 dk</td>
-                                    <td>₺800</td>
-                                    <td><span class="status-badge status-tamamlandi">Tamamlandı</span></td>
-                                </tr>
-                                <tr>
-                                    <td>25 Ekim 2025</td>
-                                    <td>Dr. Ayşe Yılmaz</td>
-                                    <td>Bireysel Terapi</td>
-                                    <td>60 dk</td>
-                                    <td>₺800</td>
-                                    <td><span class="status-badge status-tamamlandi">Tamamlandı</span></td>
-                                </tr>
-                                <tr>
-                                    <td>18 Ekim 2025</td>
-                                    <td>Dr. Ayşe Yılmaz</td>
-                                    <td>Bireysel Terapi</td>
-                                    <td>60 dk</td>
-                                    <td>₺800</td>
-                                    <td><span class="status-badge status-tamamlandi">Tamamlandı</span></td>
-                                </tr>
-                                <tr>
-                                    <td>11 Ekim 2025</td>
-                                    <td>Dr. Ayşe Yılmaz</td>
-                                    <td>Bireysel Terapi</td>
-                                    <td>60 dk</td>
-                                    <td>₺800</td>
-                                    <td><span class="status-badge status-tamamlandi">Tamamlandı</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                `,
-                'odemelerim': `
-                    <h1>Ödemelerim</h1>
-                    <div class="breadcrumb">Ana Sayfa / Ödemelerim</div>
-                    
-                    <div class="dashboard-cards" style="margin-bottom: 30px;">
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="card-title">Toplam Ödenen</span>
-                                <span class="card-icon">✅</span>
-                            </div>
-                            <div class="card-value">₺19,200</div>
-                            <div class="card-footer">24 seans tamamlandı</div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="card-title">Bekleyen Ödeme</span>
-                                <span class="card-icon">⏳</span>
-                            </div>
-                            <div class="card-value">₺800</div>
-                            <div class="card-footer negative">1 ödeme bekliyor</div>
-                        </div>
-                    </div>
-
-                    <div class="table-container" style="margin-bottom: 30px;">
-                        <h3 style="margin-bottom: 20px; color: #dc3545;">Bekleyen Ödemeler</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Seans Tarihi</th>
-                                    <th>Seans Türü</th>
-                                    <th>Tutar</th>
-                                    <th>Son Ödeme Tarihi</th>
-                                    <th>İşlem</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>8 Kasım 2025</td>
-                                    <td>Bireysel Terapi</td>
-                                    <td>₺800</td>
-                                    <td>15 Kasım 2025</td>
-                                    <td><button class="btn btn-primary" onclick="makePayment()">Ödeme Yap</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="table-container">
-                        <h3 style="margin-bottom: 20px; color: #28a745;">Ödeme Geçmişi</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Ödeme Tarihi</th>
-                                    <th>Seans Tarihi</th>
-                                    <th>Seans Türü</th>
-                                    <th>Tutar</th>
-                                    <th>Ödeme Yöntemi</th>
-                                    <th>Durum</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>2 Kasım 2025</td>
-                                    <td>1 Kasım 2025</td>
-                                    <td>Bireysel Terapi</td>
-                                    <td>₺800</td>
-                                    <td>Kredi Kartı</td>
-                                    <td><span class="status-badge status-odendi">Ödendi</span></td>
-                                </tr>
-                                <tr>
-                                    <td>26 Ekim 2025</td>
-                                    <td>25 Ekim 2025</td>
-                                    <td>Bireysel Terapi</td>
-                                    <td>₺800</td>
-                                    <td>Nakit</td>
-                                    <td><span class="status-badge status-odendi">Ödendi</span></td>
-                                </tr>
-                                <tr>
-                                    <td>19 Ekim 2025</td>
-                                    <td>18 Ekim 2025</td>
-                                    <td>Bireysel Terapi</td>
-                                    <td>₺800</td>
-                                    <td>Kredi Kartı</td>
-                                    <td><span class="status-badge status-odendi">Ödendi</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                `,
-                'profilim': `
-                    <h1>Profilim</h1>
-                    <div class="breadcrumb">Ana Sayfa / Profilim</div>
-                    <div class="form-container">
-                        <h3 style="margin-bottom: 25px;">Kişisel Bilgiler</h3>
-                        <form onsubmit="event.preventDefault(); updateProfile();">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>Ad *</label>
-                                    <input type="text" value="Elif" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Soyad *</label>
-                                    <input type="text" value="Demir" required>
-                                </div>
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>E-posta *</label>
-                                    <input type="email" value="elif.demir@email.com" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Telefon *</label>
-                                    <input type="tel" value="0532 123 45 67" required>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>Doğum Tarihi</label>
-                                    <input type="date" value="1990-05-15">
-                                </div>
-                                <div class="form-group">
-                                    <label>Cinsiyet</label>
-                                    <select>
-                                        <option value="kadin" selected>Kadın</option>
-                                        <option value="erkek">Erkek</option>
-                                        <option value="diger">Belirtmek İstemiyorum</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Adres</label>
-                                <textarea>Atatürk Cad. No: 123 Nilüfer/Bursa</textarea>
-                            </div>
-
-                            <div style="display: flex; gap: 10px; margin-top: 25px;">
-                                <button type="submit" class="btn btn-primary">Bilgileri Güncelle</button>
-                            </div>
-                        </form>
-                    </div>
-                `,
-                'ayarlar': `
-                    <h1>Ayarlar</h1>
-                    <div class="breadcrumb">Ana Sayfa / Ayarlar</div>
-                    <div class="form-container">
-                        <h3 style="margin-bottom: 25px;">Şifre Değiştir</h3>
-                        <form onsubmit="event.preventDefault(); changePassword();">
-                            <div class="form-group">
-                                <label>Mevcut Şifre *</label>
-                                <input type="password" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Yeni Şifre *</label>
-                                <input type="password" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Yeni Şifre Tekrar *</label>
-                                <input type="password" required>
-                            </div>
-
-                            <div style="display: flex; gap: 10px; margin-top: 25px;">
-                                <button type="submit" class="btn btn-primary">Şifreyi Güncelle</button>
-                            </div>
-                        </form>
-
-                        <hr style="margin: 40px 0; border: none; border-top: 1px solid #ddd;">
-
-                        <h3 style="margin-bottom: 25px;">Bildirim Ayarları</h3>
-                        <div style="display: flex; flex-direction: column; gap: 15px;">
-                            <label style="display: flex; align-items: center; gap: 10px;">
-                                <input type="checkbox" checked>
-                                <span>E-posta bildirimleri</span>
-                            </label>
-                            <label style="display: flex; align-items: center; gap: 10px;">
-                                <input type="checkbox" checked>
-                                <span>SMS bildirimleri</span>
-                            </label>
-                            <label style="display: flex; align-items: center; gap: 10px;">
-                                <input type="checkbox" checked>
-                                <span>Randevu hatırlatmaları</span>
-                            </label>
-                        </div>
-                    </div>
-                `
+        // Seans türü seçimi
+        function selectSeansType(element, type) {
+            document.querySelectorAll('.seans-type-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            selectedSeansType = {
+                type: type,
+                name: element.querySelector('.name').textContent,
+                price: element.querySelector('.price').textContent,
+                duration: element.querySelector('.duration').textContent
             };
+        }
+
+        // Randevu oluşturma
+        function createAppointment(event) {
+            event.preventDefault();
             
-            mainContent.innerHTML = pageContents[pageName] || pageContents['dashboard'];
-        }
-
-        // Randevu Oluşturma
-        function createAppointment() {
-            alert('Randevunuz başarıyla oluşturuldu!');
-            loadPage('randevularim');
-        }
-
-        // Ödeme Yapma
-        function makePayment() {
-            if (confirm('Ödemeyi onaylıyor musunuz?')) {
-                alert('Ödemeniz başarıyla alındı!');
-                loadPage('odemelerim');
+            if (!selectedSeansType) {
+                alert('Lütfen bir seans türü seçin!');
+                return;
             }
+
+            const psikolog = document.getElementById('psikolog');
+            const tarih = document.getElementById('tarih');
+            const saat = document.getElementById('saat');
+            const notlar = document.getElementById('notlar');
+
+            const details = `
+                <div style="line-height: 2;">
+                    <p><strong>Seans Türü:</strong> ${selectedSeansType.name}</p>
+                    <p><strong>Süre:</strong> ${selectedSeansType.duration}</p>
+                    <p><strong>Ücret:</strong> ${selectedSeansType.price}</p>
+                    <p><strong>Psikolog:</strong> ${psikolog.options[psikolog.selectedIndex].text}</p>
+                    <p><strong>Tarih:</strong> ${tarih.value}</p>
+                    <p><strong>Saat:</strong> ${saat.value}</p>
+                    ${notlar.value ? <p><strong>Notlar:</strong> ${notlar.value}</p> : ''}
+                </div>
+            `;
+
+            document.getElementById('randevuDetails').innerHTML = details;
+            document.getElementById('randevuModal').classList.add('active');
         }
 
-        // Profil Güncelleme
-        function updateProfile() {
-            alert('Profiliniz başarıyla güncellendi!');
+        // Randevu onaylama
+        function confirmAppointment() {
+            alert('Randevunuz başarıyla oluşturuldu! Size bilgilendirme SMS\'i gönderilecektir.');
+            closeModal();
+            showPage('dashboard');
         }
 
-        // Şifre Değiştirme
-        function changePassword() {
-            alert('Şifreniz başarıyla değiştirildi!');
+        // Modal kapatma
+        function closeModal() {
+            document.getElementById('randevuModal').classList.remove('active');
         }
 
-        // Çıkış Fonksiyonu
+        // Ödeme yapma
+        function makePayment() {
+            alert('Ödeme sayfasına yönlendiriliyorsunuz...');
+        }
+
+        // Makbuz indirme
+        function downloadReceipt() {
+            alert('Makbuz PDF olarak indiriliyor...');
+        }
+
+        // Profil düzenleme
+        function editProfile() {
+            alert('Profil düzenleme sayfası açılıyor...');
+        }
+
+        // Çıkış
         function logout() {
             if (confirm('Çıkış yapmak istediğinize emin misiniz?')) {
                 alert('Çıkış yapıldı!');
-                // window.location.href = 'login.html';
             }
         }
 
-        // Sayfa yüklendiğinde
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(() => {
-                document.querySelector('.sidebar').style.opacity = '1';
-            }, 100);
+        // Mobil sidebar
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            sidebar.classList.toggle('mobile-open');
+            overlay.classList.toggle('active');
+        }
+
+        function closeMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            sidebar.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+        }
+
+        // Sayfa yüklendiğinde dashboard'u göster
+        window.onload = function() {
+            showPage('dashboard');
+        };
+
+        // Modal dışına tıklanınca kapat
+        document.getElementById('randevuModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
         });

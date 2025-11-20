@@ -3,182 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hasta Paneli - Psikolog Kliniği</title>
+    <title>Danışan Paneli </title>
     <link rel="stylesheet" href="../css/hasta_ekrani.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/hasta_ekrani.js" defer></script>
 </head>
 <body>
-    <!-- Hamburger Menü (Mobil) -->
-    <div class="hamburger-menu" id="hamburgerMenu" onclick="toggleMobileSidebar()">
+    <!-- Hamburger Menu -->
+    <div class="hamburger-menu" onclick="toggleMobileSidebar()">
         <span></span>
         <span></span>
         <span></span>
     </div>
 
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileSidebar()"></div>
+
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
-        <!-- Toggle Butonu -->
-        <div class="sidebar-toggle" onclick="toggleSidebar()">
-            <span id="toggleIcon">◀</span>
-        </div>
-
-        <!-- Logo Bölümü -->
         <div class="logo-container">
-            <div class="logo">🧠</div>
-            <div class="clinic-name">Psikoloji Sistemi</div>
+            <div class="logo">👤</div>
+            <div class="user-info-header">
+                <div class="user-name">Ahmet Yılmaz</div>
+                <div class="user-id">Danışan ID: #1234</div>
+            </div>
         </div>
 
-        <!-- Menü Konteyneri -->
         <div class="menu-container">
-            <!-- Ana Menü -->
-            <div class="menu-section-title">ANA MENÜ</div>
+            <div class="menu-section-title">MENÜ</div>
             <ul>
                 <li>
-                    <a href="#" class="active" onclick="loadPage('dashboard')">
-                        <span class="icon">📊</span>
-                        <span>Dashboard</span>
+                    <a href="#" class="active" onclick="showPage('dashboard')">
+                        <span class="icon">🏠</span>
+                        <span>Ana Sayfa</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" onclick="loadPage('randevularim')">
+                    <a href="#" onclick="showPage('randevu')">
                         <span class="icon">📅</span>
-                        <span>Randevularım</span>
-                        <span class="badge">2</span>
+                        <span>Randevu Al</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" onclick="loadPage('yeni-randevu')">
-                        <span class="icon">➕</span>
-                        <span>Yeni Randevu Oluştur</span>
-                    </a>
-                </li>
-            </ul>
-
-            <!-- Seans Yönetimi -->
-            <div class="menu-section-title">SEANSLAR</div>
-            <ul>
-                <li>
-                    <a href="#" onclick="loadPage('gecmis-seanslar')">
+                    <a href="#" onclick="showPage('seanslar')">
                         <span class="icon">📋</span>
                         <span>Geçmiş Seanslar</span>
                     </a>
                 </li>
-            </ul>
-
-            <!-- Finans -->
-            <div class="menu-section-title">FİNANS</div>
-            <ul>
                 <li>
-                    <a href="#" onclick="loadPage('odemelerim')">
+                    <a href="#" onclick="showPage('odemeler')">
                         <span class="icon">💳</span>
-                        <span>Ödemelerim</span>
+                        <span>Ödemeler</span>
                         <span class="badge">1</span>
                     </a>
                 </li>
-            </ul>
-
-            <!-- Ayarlar -->
-            <div class="menu-section-title">HESAP</div>
-            <ul>
                 <li>
-                    <a href="#" onclick="loadPage('profilim')">
-                        <span class="icon">👤</span>
+                    <a href="#" onclick="showPage('profil')">
+                        <span class="icon">⚙</span>
                         <span>Profilim</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" onclick="loadPage('ayarlar')">
-                        <span class="icon">⚙️</span>
-                        <span>Ayarlar</span>
                     </a>
                 </li>
             </ul>
         </div>
 
-        <!-- Sidebar Footer -->
         <div class="sidebar-footer">
-            <!-- Kullanıcı Bilgisi -->
-            <div class="user-info">
-                <div class="user-avatar">ED</div>
-                <div class="user-details">
-                    <div class="user-name">Elif Demir</div>
-                    <div class="user-role">Hasta</div>
-                </div>
-            </div>
-            
-            <!-- Çıkış Butonu -->
             <button class="logout-btn" onclick="logout()">
-                <span class="icon">🚪</span>
+                <span>🚪</span>
                 <span>Çıkış Yap</span>
             </button>
         </div>
     </aside>
 
-    <!-- Mobil Overlay -->
-    <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileSidebar()"></div>
-
-    <!-- Ana İçerik -->
+    <!-- Main Content -->
     <main id="mainContent">
-        <h1>Dashboard</h1>
-        <div class="breadcrumb">Ana Sayfa / Dashboard</div>
-
-        <!-- Dashboard Kartları -->
-        <div class="dashboard-cards">
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-title">Bekleyen Randevular</span>
-                    <span class="card-icon">📅</span>
-                </div>
-                <div class="card-value">2</div>
-                <div class="card-footer">Bir sonraki: 15 Kasım 2025</div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-title">Toplam Seans</span>
-                    <span class="card-icon">📋</span>
-                </div>
-                <div class="card-value">24</div>
-                <div class="card-footer">Son seans: 8 Kasım 2025</div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-title">Bekleyen Ödeme</span>
-                    <span class="card-icon">💰</span>
-                </div>
-                <div class="card-value">₺800</div>
-                <div class="card-footer class="negative">1 ödeme bekliyor</div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-title">Son Randevu</span>
-                    <span class="card-icon">🕐</span>
-                </div>
-                <div class="card-value">15 Kas</div>
-                <div class="card-footer">Saat: 14:00</div>
-            </div>
-        </div>
-
-        <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 20px;">
-            <h2 style="color: #333; margin-bottom: 20px;">Hoş Geldiniz, Elif Hanım!</h2>
-            <p style="color: #666; line-height: 1.6;">
-                Hasta panelinize hoş geldiniz. Bu panelden randevularınızı görüntüleyebilir, 
-                yeni randevu oluşturabilir, geçmiş seanslarınıza göz atabilir ve ödeme işlemlerinizi 
-                gerçekleştirebilirsiniz. Herhangi bir sorunuz olduğunda bizimle iletişime geçebilirsiniz.
-            </p>
-        </div>
+        <!-- Dashboard sayfası başlangıçta gösterilecek -->
     </main>
 
-    <script src="../js/hasta_ekrani.js"></script>
+    <!-- Randevu Modal -->
+    <div class="modal" id="randevuModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Randevu Onayı</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="randevuDetails"></div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+                <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
+                <button class="btn btn-success" onclick="confirmAppointment()">✓ Onayla</button>
+            </div>
+        </div>
+    </div>
+
+    
 </body>
 </html>
-                                    <th>Tarih</th>
-                                    <th>Saat</th>
-                                    <th>Psikolog</th>
-                                    <th>Seans Türü</th>
-                                    <th>Durum</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
