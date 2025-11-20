@@ -26,14 +26,37 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+            </ul>
+
+            <!-- Randevular -->
+            <div class="menu-section-title">RANDEVULAR</div>
+            <ul>
+                <li>
+                    <a href="#" class="active" onclick="loadPage('dashboard')">
+                        <span class="icon">📅</span>
+                        <span>Randevu Takvimi</span>
+                    </a>
+                </li>
                 <li>
                     <a href="#" onclick="loadPage('randevular')">
-                        <span class="icon">📅</span>
+                        <span class="icon">📋</span>
                         <span>Randevular</span>
-                        <span class="badge">5</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="loadPage('randevular')">
+                        <span class="icon">➕</span>
+                        <span>Randevu Ekleme</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="loadPage('randevular')">
+                        <span class="icon">🔄</span>
+                        <span>Randevu Düzenle / İptal Et</span>
                     </a>
                 </li>
             </ul>
+
 
             <!-- Danışan Yönetimi -->
             <div class="menu-section-title">DANIŞAN YÖNETİMİ</div>
@@ -45,15 +68,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" onclick="loadPage('yeni-danisan')">
-                        <span class="icon">➕</span>
-                        <span>Yeni Danışan</span>
-                    </a>
-                </li>
-                <li>
                     <a href="#" onclick="loadPage('seans-gecmisi')">
                         <span class="icon">📋</span>
-                        <span>Seans Geçmişi</span>
+                        <span>Danışan Profili</span>
                     </a>
                 </li>
             </ul>
@@ -81,13 +98,7 @@
                 <li>
                     <a href="#" onclick="loadPage('istatistikler')">
                         <span class="icon">📈</span>
-                        <span>İstatistikler</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" onclick="loadPage('analizler')">
-                        <span class="icon">🔍</span>
-                        <span>Analizler</span>
+                        <span>İstatistikler ve Analizler</span>
                     </a>
                 </li>
             </ul>
@@ -107,7 +118,7 @@
             
             <!-- Çıkış Butonu -->
             <button class="logout-btn" onclick="logout()">
-                <span class="icon">🚪</span>
+                <span class="icon">🔚</span>
                 <span>Çıkış Yap</span>
             </button>
         </div>
@@ -118,7 +129,6 @@
 
     <!-- Ana İçerik -->
     <main id="mainContent">
-        <h1>Dashboard</h1>
         <div class="breadcrumb">Ana Sayfa / Dashboard</div>
 
         <!-- Dashboard Kartları -->
@@ -134,7 +144,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    <span class="card-title">Aktif Danışanlar</span>
+                    <span class="card-title">Bu Ay Gerçekleşen Randevu Sayısı</span>
                     <span class="card-icon">👥</span>
                 </div>
                 <div class="card-value">48</div>
@@ -143,11 +153,19 @@
 
             <div class="card">
                 <div class="card-header">
-                    <span class="card-title">Bu Ayki Gelir</span>
+                    <span class="card-title">Bu Ayın Toplam Geliri</span>
                     <span class="card-icon">💰</span>
                 </div>
                 <div class="card-value">₺45,200</div>
                 <div class="card-footer">↑ %12 artış</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">İptal Oranı</span>
+                    <span class="card-icon">❌</span>
+                </div>
+                <div class="card-value">↑ %2 artış</div>
             </div>
 
             <div class="card">
@@ -160,14 +178,6 @@
             </div>
         </div>
 
-        <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 20px;">
-            <h2 style="color: #333; margin-bottom: 20px;">Hoş Geldiniz!</h2>
-            <p style="color: #666; line-height: 1.6;">
-                Bu sistem, psikoloji kliniğinizin tüm süreçlerini kolayca yönetmenizi sağlar. 
-                Sol menüden ilgili bölümlere erişebilir, danışanlarınızı takip edebilir, 
-                randevularınızı düzenleyebilir ve finansal raporlarınızı görüntüleyebilirsiniz.
-            </p>
-        </div>
     </main>
 
     <script src="../js/yonetici_ekrani.js"></script>
