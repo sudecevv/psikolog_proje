@@ -27,3 +27,13 @@ function islemYap(id) {
     odeme.durum = yeniDurum;
     location.reload(); // Sayfayı yeniden yükle
 }
+
+
+        function logout() {
+            // session temizleme (opsiyonel)
+            localStorage.clear();
+            sessionStorage.clear();
+
+            // login sayfasına yönlendirme
+            window.location.href = 'login.html';
+        }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danışan Paneli </title>
-    <link rel="stylesheet" href="../css/hasta_ekrani.css">
+    <link rel="stylesheet" href="../css/hasta_randevular.css">
 </head>
 <body>
     <!-- Hamburger Menu -->
@@ -31,13 +31,13 @@
             <div class="menu-section-title">MENÜ</div>
             <ul>
                 <li>
-                    <a href="hasta_ekrani.html" class="active" onclick="showPage('dashboard')">
+                    <a href="hasta_ekrani.html" onclick="showPage('dashboard')">
                         <span class="icon">🏠</span>
                         <span>Ana Sayfa</span>
                     </a>
                 </li>
                 <li>
-                    <a href="hasta_randevular.html" onclick="showPage('randevu')">
+                    <a href="hasta_randevular.html" class="active" onclick="showPage('randevu')">
                         <span class="icon">📅</span>
                         <span>Randevularım</span>
                     </a>
@@ -59,49 +59,25 @@
         </div>
     </aside>
 
-    <div class="navbar">Hasta Dashboard</div>
-
+    <div class="navbar">Randevularım</div>
 
     <div class="container">
         <div class="card">
-            <h2>Yaklaşan Randevularım</h2>
-            <div id="upcoming"></div>
-        </div>
-
-
-        <div class="card">
-            <h2>Son Seans Özeti</h2>
-            <div id="summary"></div>
-        </div>
-
-
-        <div class="card">
-            <h2>Ödeme Durumu</h2>
-            <div id="payment"></div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tarih</th>
+                        <th>Seans Türü</th>
+                        <th>Durum</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody id="apptTable"></tbody>
+            </table>
         </div>
     </div>
 
-    <!-- Main Content -->
-    <main id="mainContent">
-        <!-- Dashboard sayfası başlangıçta gösterilecek -->
-    </main>
+    <script src="../js/hasta_randevular.js"></script>
 
-    <!-- Randevu Modal -->
-    <div class="modal" id="randevuModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Randevu Onayı</h2>
-                <button class="close-btn" onclick="closeModal()">&times;</button>
-            </div>
-            <div id="randevuDetails"></div>
-            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
-                <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
-                <button class="btn btn-success" onclick="confirmAppointment()">✓ Onayla</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="../js/hasta_ekrani.js"></script>
 </body>
 </html>

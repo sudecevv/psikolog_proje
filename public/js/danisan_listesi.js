@@ -42,3 +42,12 @@ window.addEventListener("DOMContentLoaded", () => {
 function goDetail(id) {
     window.location.href = `danisan_detay.html?id=${id}`;
 }
+
+function logout() {
+    // session temizleme (opsiyonel)
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // login sayfasına yönlendirme
+    window.location.href = 'login.html';
+}

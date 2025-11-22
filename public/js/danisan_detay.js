@@ -65,3 +65,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+function logout() {
+    // session temizleme (opsiyonel)
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // login sayfasına yönlendirme
+    window.location.href = 'login.html';
+}

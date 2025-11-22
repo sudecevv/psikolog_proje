@@ -84,3 +84,13 @@ heatmapData.forEach(row => {
 });
 
 heatmap.innerHTML = html;
+
+
+function logout() {
+    // session temizleme (opsiyonel)
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // login sayfasına yönlendirme
+    window.location.href = 'login.html';
+}S

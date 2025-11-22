@@ -18,3 +18,11 @@ document.getElementById("randevuForm").addEventListener("submit", function(e) {
 
     window.location.href = "randevu_takvimi.html";
 });
+function logout() {
+    // session temizleme (opsiyonel)
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // login sayfasına yönlendirme
+    window.location.href = 'login.html';
+}

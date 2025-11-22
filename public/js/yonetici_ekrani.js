@@ -13,12 +13,13 @@
             }
         }
 
-        // Çıkış Fonksiyonu
         function logout() {
-            if (confirm('Çıkış yapmak istediğinize emin misiniz?')) {
-                alert('Çıkış yapıldı!');
-                // window.location.href = 'login.html';
-            }
+            // session temizleme (opsiyonel)
+            localStorage.clear();
+            sessionStorage.clear();
+
+            // login sayfasına yönlendirme
+            window.location.href = 'login.html';
         }
 
         // Sayfa yüklendiğinde

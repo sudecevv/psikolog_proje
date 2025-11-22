@@ -49,3 +49,12 @@ document.getElementById("nextDay").onclick = () => {
     currentDate.setDate(currentDate.getDate() + 1);
     renderCalendar();
 };
+
+function logout() {
+    // session temizleme (opsiyonel)
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // login sayfasına yönlendirme
+    window.location.href = 'login.html';
+}
