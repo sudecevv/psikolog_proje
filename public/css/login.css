@@ -8,18 +8,42 @@ body {
     background-position: center;
     height: 100vh;
     font-family: Arial, sans-serif;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    backdrop-filter: blur(6px);
+    background-color: rgba(0, 0, 0, 0.35);
+    z-index: -1;
 }
 
 /* Giriş sayfası container */
 .login-container {
+    max-width: 450px;
+    margin: 0 auto;
+    margin-top: 12%;
     text-align: center;
     color: white;
-    padding-top: 15%;
+    padding: 40px 30px;
+    border-radius: 15px;
+
+    /* Cam efekti kutu */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Başlık */
 .login-container h1 {
-    font-size: 48px;
+    font-size: 36px;
     margin-bottom: 40px;
 }
 
@@ -39,4 +63,5 @@ body {
 /* Buton hover efekti */
 .button-group button:hover {
     background-color: #00306a;
+    transform: scale(1.05);
 }
