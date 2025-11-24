@@ -59,27 +59,34 @@
         </div>
     </aside>
 
-    <div class="navbar">Hasta Dashboard</div>
+     <!-- Main Content -->
+    <main>
+        <div class="navbar">Danışan Paneli</div>
 
-    <main id="mainContent"></main>
-        <div class="container">
+        <div class="dashboard-container">
+            <!-- Yaklaşan Randevular -->
             <div class="card">
                 <h2>Yaklaşan Randevularım</h2>
-                <div id="upcoming"></div>
+                <div id="upcomingRandevular"></div>
             </div>
 
-
-            <div class="card">
-                <h2>Son Seans Özeti</h2>
-                <div id="summary"></div>
-            </div>
-
-
+            <!-- Ödeme Durumu -->
             <div class="card">
                 <h2>Ödeme Durumu</h2>
-                <div id="payment"></div>
+                <canvas id="paymentChart" style="max-height: 300px;"></canvas>
+                <table class="table" id="paymentTable">
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Tutar</th>
+                            <th>Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- JS ile doldurulacak -->
+                    </tbody>
+                </table>
             </div>
-        </div>
     </main>
 
     <!-- Randevu Modal -->
@@ -90,6 +97,7 @@
                 <button class="close-btn" onclick="closeModal()">&times;</button>
             </div>
             <div id="randevuDetails"></div>
+            <div class="modal-actions"></div>
             <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
                 <button class="btn btn-secondary" onclick="closeModal()">İptal</button>
                 <button class="btn btn-success" onclick="confirmAppointment()">✓ Onayla</button>
