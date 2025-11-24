@@ -118,11 +118,76 @@
         </div>
     </aside>
 
-    <div id="randevuList"></div>
-        <h1>✏ Randevu Düzenle / İptal Et</h1>
+        <!-- ANA ALAN -->
+    <main class="main-content">
+        <header class="page-header">
+            <h1>✏ Randevu Düzenle / İptal Et</h1>
+            <p class="sub">Kart, tablo veya takvim görünümünde randevuları yönet.</p>
+        </header>
 
-        <div id="randevuList"></div>
+        <section class="controls">
+            <input id="searchInput" type="text" placeholder="Danışan adı ara..." />
+            <select id="durumFilter">
+                <option value="">Tüm Durumlar</option>
+                <option>Onaylandı</option>
+                <option>Beklemede</option>
+                <option>Tamamlandı</option>
+                <option>İptal edildi</option>
+            </select>
+
+            <select id="sortSelect">
+                <option value="">Sıralama Yok</option>
+                <option value="tarihAsc">Tarihe Göre (Artan)</option>
+                <option value="tarihDesc">Tarihe Göre (Azalan)</option>
+            </select>
+
+            <div class="view-buttons">
+                <button id="btn-cards" class="view-btn active" onclick="changeView('cards')">Kart</button>
+                <button id="btn-table" class="view-btn" onclick="changeView('table')">Tablo</button>
+                <button id="btn-calendar" class="view-btn" onclick="changeView('calendar')">Takvim</button>
+            </div>
+
+            <button class="add-btn" onclick="openAddNew()">+ Yeni Randevu</button>
+        </section>
+
+        <!-- RANDEVU LİSTESİ (Kart / Tablo) -->
+        <div id="randevuList" class="list-area"></div>
+
+        <!-- TAKVIM -->
+        <div id="calendar" style="display:none;"></div>
+    </main>
+
+    <!-- MODAL -->
+    <div id="editModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-content">
+            <h2 id="modalTitle">Randevu Düzenle</h2>
+
+            <label>Danışan Adı</label>
+            <input id="editDanisan" type="text" placeholder="Danışan adı">
+
+            <label>Tarih</label>
+            <input id="editTarih" type="date">
+
+            <label>Saat</label>
+            <input id="editSaat" type="time">
+
+            <label>Durum</label>
+            <select id="editDurum">
+                <option>Onaylandı</option>
+                <option>Beklemede</option>
+                <option>Tamamlandı</option>
+                <option>İptal edildi</option>
+            </select>
+
+            <div class="modal-buttons">
+                <button class="save" onclick="kaydetDegisiklik()">Kaydet</button>
+                <button class="close" onclick="closeModal()">Kapat</button>
+            </div>
+        </div>
     </div>
+
+    <!-- FullCalendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 
     <!-- Mobil Overlay -->

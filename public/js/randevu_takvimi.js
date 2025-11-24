@@ -58,3 +58,5 @@ function logout() {
     // login sayfasına yönlendirme
     window.location.href = 'login.html';
 }
+
+
