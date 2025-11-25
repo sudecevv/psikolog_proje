@@ -154,25 +154,164 @@ main {
 .card {
     background: white;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 64, 133, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+.card h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #004085;
+    border-left: 4px solid #588fd2;
+    padding-left: 15px;
     margin-bottom: 20px;
 }
 
-.card h2 { margin-top: 0; font-size: 22px; }
-.table { width: 100%; border-collapse: collapse; }
-.table th, .table td { border-bottom: 1px solid #ddd; padding: 10px; }
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 10px;
+}
 
-.status-approved { color: green; font-weight: bold; }
-.status-cancelled { color: red; font-weight: bold; }
-.status-pending { color: orange; font-weight: bold; }
-.btn-cancel {
-    background: red;
-    color: #fff;
+.table thead {
+    background: linear-gradient(135deg, #004085 0%, #588fd2 100%);
+}
+
+.table th {
+    color: white;
+    padding: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-align: left;
+}
+
+.table td {
+    border-bottom: 1px solid #f0f4f8;
+    padding: 15px;
+    transition: all 0.3s ease;
+}
+
+.table tbody tr {
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.table tbody tr:hover {
+    background: linear-gradient(90deg, rgba(88, 143, 210, 0.05) 0%, rgba(88, 143, 210, 0.15) 100%);
+    transform: scale(1.01);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.status-approved {
+    color: #28a745;
+    font-weight: 600;
+    background: rgba(40, 167, 69, 0.1);
     padding: 6px 12px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+    animation: fadeIn 0.5s ease;
+}
+
+.status-approved::before {
+    content: "✓";
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+.status-cancelled {
+    color: #dc3545;
+    font-weight: 600;
+    background: rgba(220, 53, 69, 0.1);
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+    animation: fadeIn 0.5s ease;
+}
+
+.status-cancelled::before {
+    content: "✕";
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+.status-pending {
+    color: #fd7e14;
+    font-weight: 600;
+    background: rgba(253, 126, 20, 0.1);
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+    animation: pulse 2s infinite;
+}
+
+.status-pending::before {
+    content: "⏱";
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+.btn-cancel {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: #fff;
+    padding: 8px 16px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-cancel:hover {
+    background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+}
+
+.btn-cancel:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(220, 53, 69, 0.3);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
 }
 
 /* Responsive */

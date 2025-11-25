@@ -70,3 +70,8 @@ body {
 .login-form button:hover {
     background-color: #00306a;
 }
+
+.login-form input:focus{
+    border-color: #004085;
+    outline:none;
+}
