@@ -2,6 +2,15 @@ const express = require("express");
 const app = express();
 const db = require("./db");
 
+// Body parsers
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// ROUTES
+const randevuRoutes = require("./routes/randevu");
+app.use("/api/randevu", randevuRoutes);
+
+// Test endpoint (hasta listesi)
 app.get("/hastalar", async (req, res) => {
     try {
         const [rows] = await db.query("SELECT * FROM hasta");
