@@ -366,115 +366,140 @@ body::after {
 /* Main Content */
 main {
     margin-left: 260px;
-    padding: 30px;
+    padding: 25px;
     width: calc(100% - 260px);
     transition: margin-left 0.3s ease;
     min-height: 100vh;
+    animation: fadeInSlow 0.6s ease;
 }
 
-.page-header { margin-bottom: 30px; }
-.page-header h1 { color: #004085; font-size: 32px; margin-bottom: 5px; }
-.breadcrumb { color: #666; font-size: 14px; }
+@keyframes fadeInSlow {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
+.page-header {
+    margin-bottom: 20px;
+}
+.page-header h1 {
+    color: #004085;
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+.breadcrumb {
+    color: #666;
+    font-size: 14px;
+}
+
+/* NAVBAR - Daha Canlı */
 .navbar {
-    background: #4a6fa5;
-    padding: 30px;
+    background: linear-gradient(135deg, #3b5c93, #4a6fa5);
+    padding: 28px;
     color: #fff;
     font-size: 20px;
     text-align: center;
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 5px 25px rgba(0, 64, 133, 0.3);
+    animation: navbarGlow 4s infinite alternate ease-in-out;
 }
 
+@keyframes navbarGlow {
+    0% { box-shadow: 0 5px 20px rgba(0, 64, 133, 0.25); }
+    100% { box-shadow: 0 5px 35px rgba(0, 64, 133, 0.5); }
+}
+
+/* CONTENT YUKARI ALINDI */
 .container {
     width: 65%;
-    margin: 30px auto;
+    margin: 10px auto; /* ← daha yukarı */
 }
 
+/* CARD - daha canlı hareketli */
 .card {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
+    background: rgba(255,255,255,0.95);
+    padding: 22px;
+    border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     margin-bottom: 25px;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(0, 64, 133, 0.1);
+    transition: 0.35s ease;
+    border: 1px solid rgba(0, 64, 133, 0.12);
+    backdrop-filter: blur(6px);
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.18);
 }
 
+/* Başlık çizgisi daha premium */
 .card h2 {
     margin-top: 0;
     font-size: 24px;
     color: #004085;
     border-left: 4px solid #588fd2;
     padding-left: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
+/* TABLO */
 .table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.98);
 }
 
+/* Thead – daha canlı gradient */
 .table thead {
-    background: linear-gradient(135deg, #004085 0%, #588fd2 100%);
+    background: linear-gradient(135deg, #004085 0%, #6ba2e6 100%);
+    animation: headPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes headPulse {
+    0% { filter: brightness(1); }
+    100% { filter: brightness(1.15); }
 }
 
 .table th {
     color: white;
     padding: 15px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     font-size: 12px;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
     text-align: left;
 }
 
-.table td {
-    border-bottom: 1px solid #f0f4f8;
-    padding: 15px;
-    transition: all 0.3s ease;
-}
-
+/* Satırlar */
 .table tbody tr {
-    transition: all 0.3s ease;
-    background: white;
+    transition: 0.25s ease;
 }
 
 .table tbody tr:hover {
-    background: linear-gradient(90deg, rgba(88, 143, 210, 0.05) 0%, rgba(88, 143, 210, 0.15) 100%);
+    background: linear-gradient(90deg, rgba(108,155,220,0.05), rgba(108,155,220,0.25));
     transform: scale(1.01);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-shadow: inset 0 0 12px rgba(0,0,0,0.05);
 }
 
+/* STATÜ Etiketleri */
 .status-approved {
     color: #28a745;
     font-weight: 600;
-    background: rgba(40, 167, 69, 0.1);
+    background: rgba(40,167,69,0.15);
     padding: 6px 12px;
     border-radius: 20px;
     display: inline-flex;
     align-items: center;
     font-size: 13px;
     animation: fadeIn 0.5s ease;
-}
-
-.status-approved::before {
-    content: "✓";
-    margin-right: 5px;
-    font-weight: bold;
 }
 
 .status-cancelled {
     color: #dc3545;
     font-weight: 600;
-    background: rgba(220, 53, 69, 0.1);
+    background: rgba(220,53,69,0.15);
     padding: 6px 12px;
     border-radius: 20px;
     display: inline-flex;
@@ -483,16 +508,10 @@ main {
     animation: fadeIn 0.5s ease;
 }
 
-.status-cancelled::before {
-    content: "✕";
-    margin-right: 5px;
-    font-weight: bold;
-}
-
 .status-pending {
     color: #fd7e14;
     font-weight: 600;
-    background: rgba(253, 126, 20, 0.1);
+    background: rgba(253,126,20,0.15);
     padding: 6px 12px;
     border-radius: 20px;
     display: inline-flex;
@@ -501,68 +520,28 @@ main {
     animation: pulse 2s infinite;
 }
 
-.status-pending::before {
-    content: "⏱";
-    margin-right: 5px;
-    font-weight: bold;
-}
-
+/* BUTON – daha güçlü efekt */
 .btn-cancel {
-    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    background: linear-gradient(135deg, #dc3545 0%, #b91f2e 100%);
     color: #fff;
-    padding: 8px 16px;
+    padding: 9px 18px;
     border: none;
-    border-radius: 8px;
+    border-radius: 9px;
     cursor: pointer;
     font-weight: 600;
     font-size: 13px;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+    transition: 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    box-shadow: 0 3px 12px rgba(220,53,69,0.35);
 }
 
 .btn-cancel:hover {
-    background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(220,53,69,0.45);
 }
 
-.btn-cancel:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 5px rgba(220, 53, 69, 0.3);
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-5px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.6;
-    }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .sidebar { transform: translateX(-100%); }
-    .sidebar.mobile-open { transform: translateX(0); }
-    main { margin-left: 0; width: 100%; padding: 20px; }
-    .dashboard-cards, .appointment-form, .seans-type-grid { grid-template-columns: 1fr; }
-    .hamburger-menu { display: flex; }
-    main { padding-top: 80px; }
-}
-
+/* HAMBURGER MENU */
 .hamburger-menu {
     display: none;
     position: fixed;
@@ -578,9 +557,19 @@ main {
     align-items: center;
     gap: 5px;
     z-index: 999;
+    transition: 0.3s;
 }
-.hamburger-menu span { width: 20px; height: 2px; background-color: white; }
+.hamburger-menu:hover {
+    transform: scale(1.1);
+    background-color: #002d61;
+}
+.hamburger-menu span {
+    width: 20px;
+    height: 2px;
+    background-color: white;
+}
 
+/* Mobile Overlay */
 .mobile-overlay {
     display: none;
     position: fixed;
@@ -588,7 +577,16 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 998;
 }
 .mobile-overlay.active { display: block; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.mobile-open { transform: translateX(0); }
+    main { margin-left: 0; width: 100%; padding: 20px; }
+    .hamburger-menu { display: flex; }
+    main { padding-top: 80px; }
+}
