@@ -1,88 +1,75 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
-    /*** LOGOUT ***/
-    window.logout = () => {
-        localStorage.clear();
-        sessionStorage.clear();
-        window.location.href = 'login.html';
+    const hasta_id = localStorage.getItem("hasta_id");
+    if (!hasta_id) {
+        alert("Hasta ID bulunamadı! Giriş yapmanız gerekiyor.");
+        window.location.href = "login.html";
+        return;
     }
 
-    /*** Örnek Randevular ***/
-    const upcomingRandevular = [
-        { tarih: "25 Kasım 2025", saat: "14:00", tur: "Bireysel Terapi" },
-        { tarih: "27 Kasım 2025", saat: "10:00", tur: "Çift Terapisi" },
-        { tarih: "29 Kasım 2025", saat: "16:00", tur: "Grup Terapisi" }
-    ];
+    /*** API'DEN VERİ ÇEKME ***/
+    async function fetchData(url) {
+        const res = await fetch(url);
+        return await res.json();
+    }
 
-    /*** Örnek Ödemeler ***/
-    const payments = [
-        { tarih: "01 Kasım 2025", tutar: 200, odendi: true },
-        { tarih: "12 Kasım 2025", tutar: 250, odendi: false },
-        { tarih: "20 Kasım 2025", tutar: 150, odendi: true },
-        { tarih: "22 Kasım 2025", tutar: 300, odendi: false }
-    ];
-
-    /*** YAKLAŞAN RANDEVU LİSTESİ ***/
+    /*** YAKLAŞAN RANDEVULAR ***/
     const upcomingContainer = document.getElementById("upcomingRandevular");
-    if (upcomingContainer) {
+
+    try {
+        const upcoming = await fetchData(`http://localhost:3000/api/randevu/upcoming/${hasta_id}`);
+
         upcomingContainer.innerHTML = "";
-        upcomingRandevular.forEach(r => {
+
+        if (upcoming.length === 0) {
+            upcomingContainer.innerHTML = "<p style='color:#777;'>Yaklaşan randevunuz yok.</p>";
+        }
+
+        upcoming.forEach(r => {
             const div = document.createElement("div");
             div.className = "randevu-item";
             div.innerHTML = `<strong>${r.tarih} ${r.saat}</strong> - ${r.tur}`;
             upcomingContainer.appendChild(div);
         });
+
+    } catch (err) {
+        console.error("Randevu getirme hatası:", err);
     }
 
-    /*** RANDEVU MODAL FONKSİYONLARI ***/
-    const randevuModal = document.getElementById("randevuModal");
-    const randevuDetails = document.getElementById("randevuDetails");
-
-    function openModal(r) {
-        randevuModal.style.display = "block";
-        randevuDetails.innerHTML = `
-            <p><strong>Tarih:</strong> ${r.tarih}</p>
-            <p><strong>Saat:</strong> ${r.saat}</p>
-            <p><strong>Tür:</strong> ${r.tur}</p>
-        `;
-    }
-
-    window.closeModal = () => {
-        randevuModal.style.display = "none";
-    }
-
-    window.confirmAppointment = () => {
-        alert("Randevu onaylandı!");
-        closeModal();
-    }
-
-    /*** ÖDEME TABLOSU VE CHART ***/
+    /*** ÖDEME DURUMU ***/
     const paymentTableBody = document.querySelector("#paymentTable tbody");
-    if (paymentTableBody) {
+
+    try {
+        const payments = await fetchData(`http://localhost:3000/api/randevu/payments/${hasta_id}`);
+
         paymentTableBody.innerHTML = "";
+
         payments.forEach(p => {
             const tr = document.createElement("tr");
+
             tr.innerHTML = `
                 <td>${p.tarih}</td>
                 <td>${p.tutar}₺</td>
-                <td class="${p.odendi ? 'payment-paid' : 'payment-pending'}">
-                    ${p.odendi ? 'Ödendi' : 'Ödenmedi'}
+                <td class="${p.odeme_durumu === 'Ödendi' ? 'payment-paid' : 'payment-pending'}">
+                    ${p.odeme_durumu}
                 </td>
             `;
+
             paymentTableBody.appendChild(tr);
         });
-    }
 
-    const chartCanvas = document.getElementById("paymentChart");
-    if (chartCanvas) {
-        new Chart(chartCanvas.getContext('2d'), {
-            type: 'bar',
+        /*** CHART ***/
+        const chartCanvas = document.getElementById("paymentChart");
+
+        new Chart(chartCanvas.getContext("2d"), {
+            type: "bar",
             data: {
                 labels: payments.map(p => p.tarih),
                 datasets: [{
-                    label: 'Ödeme Tutarı',
                     data: payments.map(p => p.tutar),
-                    backgroundColor: payments.map(p => p.odendi ? 'green' : 'red')
+                    backgroundColor: payments.map(p =>
+                        p.odeme_durumu === "Ödendi" ? "green" : "red"
+                    )
                 }]
             },
             options: {
@@ -90,13 +77,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 scales: { y: { beginAtZero: true } }
             }
         });
+
+    } catch (err) {
+        console.error("Ödeme bilgisi getirme hatası:", err);
     }
 
+    /*** LOGOUT ***/
+    window.logout = () => {
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.href = "login.html";
+    };
 });
 
-// Çıkış
-function logout() {
-    localStorage.clear();
-    sessionStorage.clear();
-    window.location.href = 'login.html';
-}

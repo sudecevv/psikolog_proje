@@ -14,3 +14,5 @@ function girisYap(event) {
         alert('Bilgiler yanlış!');
     }
 }
+
+
